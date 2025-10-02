@@ -1,0 +1,11 @@
+                                                                                                     
+${AnsiColor.BLUE} ███████╗  ███████╗ ███████╗  ${AnsiColor.BRIGHT_RED} ████████╗ ████████╗ ██╗    ████████╗  ██████╗
+${AnsiColor.BLUE} ██╔═══██╗ ██╔════╝ ██╔═══██╗ ${AnsiColor.BRIGHT_RED} ██║   ██║ ╚══██╔══╝ ██║    ██║   ██║ ██╔════╝
+${AnsiColor.BLUE} ███████╔╝ ██║      ███████╔╝ ${AnsiColor.BRIGHT_RED} ████████║    ██║    ██║    ████████║ ╚█████╗ 
+${AnsiColor.BLUE} ██╔═══██╗ ██║      ██╔════╝  ${AnsiColor.BRIGHT_RED} ██║   ██║    ██║    ██║    ██║   ██║  ╚═══██╗
+${AnsiColor.BLUE} ███████╔╝ ███████╗ ██║       ${AnsiColor.BRIGHT_RED} ██║   ██║    ██║    █████╗ ██║   ██║ ██████╔╝
+${AnsiColor.BLUE} ╚══════╝  ╚══════╝ ╚═╝       ${AnsiColor.BRIGHT_RED} ╚═╝   ╚═╝    ╚═╝    ╚════╝ ╚═╝   ╚═╝ ╚═════╝ 
+
+${AnsiColor.BRIGHT_BLUE}:: ATLAS 🤓  :: Running Spring Boot ${spring-boot.version} ::
+:: Micro-Service ${spring.application.name} version ${info.project.version} ::
+:: BCP - ATLAS ::${AnsiColor.DEFAULT}

@@ -1,0 +1,29 @@
+spring:
+  profiles:
+    active: local
+  application:
+    name: peds-business-customer-contracts
+  cloud:
+    kubernetes:
+      enabled: false
+    config:
+      name: peds-business-customer-contracts
+  webflux:
+    base-path: '/business/peds/v1/customer-contracts'
+
+info:
+  project:
+    name: '@project.name@'
+    description: '@project.description@'
+    version: '@project.version@'
+    type: 'cross'
+    artifact-id: '@project.artifactId@'
+    app-group: 'atla'
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      base-path: '${spring.webflux.base-path}/actuator'

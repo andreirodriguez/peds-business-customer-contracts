@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.bcp.atlas.services</groupId>
+        <artifactId>atlas-services-parent</artifactId>
+        <version>2.6.0</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.bcp.atlas.restclient.sql</groupId>
+    <artifactId>peds-cloud-azure-sql</artifactId>
+
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>Rest Client SQL</name>
+    <description>Use SQL | Azure SQL </description>
+
+    <inceptionYear>2023</inceptionYear>
+
+    <organization>
+        <name>Banco de Credito del Peru</name>
+        <url>http://www.bcp.com.pe/</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>T22004</id>
+            <name>Andrei Rodriguez Barriga</name>
+            <email>andreirodriguez@bcp.com.pe</email>
+            <organization>Banco de Credito del Peru</organization>
+            <timezone>America/Lima</timezone>
+            <roles>
+                <role>SME Engineer Cloud</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <dependencies>
+        <!--Atlas Web Starter -->
+        <dependency>
+            <groupId>com.bcp.atlas</groupId>
+            <artifactId>atlas-core-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.azure.spring</groupId>
+            <artifactId>spring-cloud-azure-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.bcp.atlas</groupId>
+            <artifactId>atlas-core-support-encryption</artifactId>
+        </dependency>
+
+        <!-- Importar la dependencia que corresponda al conector de tu base de datos  -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>11.2.1.jre11</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>retrofit</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>converter-gson</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.azure.spring</groupId>
+                <artifactId>spring-cloud-azure-dependencies</artifactId>
+                <version>4.10.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

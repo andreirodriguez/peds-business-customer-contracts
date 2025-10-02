@@ -1,0 +1,88 @@
+spring:
+  cloud:
+    config:
+      uri: https://ass-config-server-v2.ocpappsdesa.credito.bcp.com.pe/config-server
+      username: APTLDES
+      password: '{cipher}7b88b8b4b0442f9b4755aa28299d112973763f873c2c7cbc0a0be81234cf3a279589c3e267e92ce4a411fb8efa71f90b'
+      label: atlas-2.5-azure
+      fail-fast: false # si no se quiere conexi?n con el cfg-server cambiar a **false**
+      profile: dev
+  datasource:
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: 'jdbc:sqlserver://localhost:1433;databaseName=SQLBDEU2PEDSD04;queryTimeout=30;encrypt=false'
+    username: sa
+    password: Theo@ndre040113
+    platform: mssql
+    hikari:
+      pool-name: HikariPool #Nombre del pool de conexiones
+      connection-timeout: 10000 #Tiempo máximo en milisegundos que Hikari espera para obtener una conexión del pool antes de lanzar una excepción.
+      validation-timeout: 3000 #El tiempo máximo en milisegundos que Hikari espera para validar una conexión cuando se toma prestada del pool.
+      maximum-pool-size: 50 #Define el número máximo de conexiones que pueden estar en el pool al mismo tiempo.
+      minimum-idle: 20 #Especifica el número mínimo de conexiones inactivas que se mantendrán en el pool.
+      idle-timeout: 60000 #Es el tiempo máximo en milisegundos que una conexión puede estar inactiva en el pool antes de ser eliminada.
+      max-lifetime: 1800000 #Esta propiedad define el tiempo máximo de vida de una conexión en el pool, independientemente si esta activa o inactiva.
+      leak-detection-threshold: 5000 #Se utiliza para lanzar una alerta cuando una conexión no se ha devuelto al pool en un tiempo razonable, lo que puede indicar una fuga de conexiones.
+      connection-test-query: SELECT 1 #Define una consulta SQL que se ejecuta para probar la validez de una conexión antes de que se la entregue a la aplicación.
+      auto-commit: true #Establece si las conexiones devueltas al pool deben tener el modo de auto-commit activado o desactivado.
+  jpa:
+    show-sql: true
+    properties.hibernate.dialect: org.hibernate.dialect.SQLServerDialect
+    hibernate.ddl-auto: none
+
+apis:
+  user:
+    get-by-id: "https://jsonplaceholder.typicode.com/todos/%s"
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql: TRACE
+
+encrypt:
+  key: 294979e512cb8e79370dabecadc3fcbb849e78d2d6bd2049
+
+application:
+  atlas:
+    http:
+      header:
+        defaults:
+          - name: Authorization
+            required: false
+          - name: Request-ID
+            required: false
+          - name: request-date
+            required: false
+          - name: app-code
+            required: false
+          - name: caller-name
+            required: false
+  authorization:
+    gateway:
+      enabled: false
+  http-client:
+    atlas:
+      test:
+        base-url: 'http://localhost:9111${spring.webflux.base-path}/'
+        connect-timeout: 200
+        read-timeout: 4000
+        write-timeout: 800
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 30
+      minimumNumberOfCalls: 10
+      permittedNumberOfCallsInHalfOpenState: 10
+      automaticTransitionFromOpenToHalfOpenEnabled: false
+      waitDurationInOpenState: 10s
+      failureRateThreshold: 50
+      recordFailurePredicate: com.bcp.atlas.core.http.utils.AtlasHttpClientRecordFailurePredicate
+  instances:
+    circuit-breaker-example:
+      baseConfig: default
+      waitDurationInOpenState: 5s
+      slidingWindowSize: 40

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true">
+  <!--  <include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+
+  <springProperty name="service.name" source="spring.application.name"/>
+  <springProperty name="service.version" source="info.project.version"/>
+  <springProperty name="service.type" source="info.project.type"/>
+  <springProperty name="app.group" source="info.project.app-group"/>
+  <springProperty name="custom_converters" source="logging.obfuscation.converter.additional" defaultValue=""/>
+
+  <!-- declare rule -->
+  <conversionRule conversionWord="msg_obf"
+                  converterClass="com.bcp.atlas.core.starter.logstash.logback.converter.MessageDelegateConverter"/>
+  <!-- declare rule -->
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>
+        %d{yyyy-MM-dd}|%d{HH:mm:ss}|%d{SSS}|%X{documentNumber}|%X{documentType}|%X{sessionId}|%X{transactionId}|%X{operationNumber}|%X{appCode}|%X{ipAddress}|%X{hostName}|%F|%L|%p|%C|%M|%X{statusCode}|%msg_obf{json,url,toString,mixed,}%n
+      </pattern>
+    </encoder>
+  </appender>
+
+  <appender name="OBFUSCATOR"
+            class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+
+      <providers>
+        <timestamp/>
+        <mdc/> <!-- MDC variables on the Thread will be written as JSON fields -->
+        <context/> <!--Outputs entries from logback's context -->
+        <version/> <!-- Logstash json format version, the @version field in the output -->
+        <logLevel/>
+        <loggerName/>
+
+        <pattern>
+          <pattern> <!-- we can add some custom fields sendTo be sent with all the log entries. -->
+            {      <!--make filtering easier in Logstash -->
+            "service-name":
+            "peds-cloud-azure-sql", <!--or searching with Kibana -->
+            "service-version": "1.0.0",
+            "service-type": "channel",
+            "app-group": "peds",
+            "message": "%msg_obf{json,url,toString,mixed,}" <!-- use rule -->
+            }
+          </pattern>
+        </pattern>
+
+        <threadName/>
+        <logstashMarkers/> <!-- Useful so we can add extra information for specific log lines as Markers -->
+        <arguments/> <!--or through StructuredArguments -->
+
+        <stackTrace/>
+      </providers>
+    </encoder>
+  </appender>
+
+  <root level="#logback.loglevel#">
+    <!--    <appender-ref ref="OBFUSCATOR"/> &lt;!&ndash; se imprime en formato json tal como lo recibe logstash &ndash;&gt;-->
+    <!-- O usar tipo consola -->
+    <appender-ref ref="STDOUT"/>
+  </root>
+
+  <logger name="javax.activation" level="WARN"/>
+  <logger name="javax.mail" level="WARN"/>
+  <logger name="javax.xml.bind" level="WARN"/>
+  <logger name="ch.qos.logback" level="WARN"/>
+  <logger name="com.jcabi.manifests" level="INFO"/>
+  <logger name="com.codahale.metrics" level="WARN"/>
+  <logger name="com.netflix" level="WARN"/>
+  <logger name="com.netflix.discovery" level="INFO"/>
+  <logger name="com.ryantenney" level="WARN"/>
+  <logger name="com.sun" level="WARN"/>
+  <logger name="com.zaxxer" level="WARN"/>
+  <logger name="org.eclipse.jetty" level="WARN"/>
+  <logger name="org.apache" level="WARN"/>
+  <logger name="org.apache.catalina.startup.DigesterFactory" level="OFF"/>
+  <logger name="org.bson" level="WARN"/>
+  <logger name="org.hibernate.validator" level="WARN"/>
+  <logger name="org.mongodb.driver" level="WARN"/>
+  <logger name="org.reflections" level="WARN"/>
+  <logger name="org.springframework" level="WARN"/>
+  <logger name="org.springframework.web" level="WARN"/>
+  <logger name="org.springframework.security" level="WARN"/>
+  <logger name="org.springframework.cache" level="WARN"/>
+  <logger name="org.springframework.cloud" level="WARN"/>
+  <logger name="org.thymeleaf" level="WARN"/>
+  <logger name="org.xnio" level="WARN"/>
+  <logger name="reactor" level="INFO"/>
+  <logger name="io.netty" level="INFO"/>
+  <logger name="springfox" level="WARN"/>
+  <logger name="sun.rmi" level="WARN"/>
+  <logger name="sun.net.www" level="INFO"/>
+  <logger name="sun.rmi.transport" level="WARN"/>
+  <logger name="com.bcp.atlas" level="INFO"/>
+  <logger name="org.springframework.ws.client.MessageTracing" level="WARN"/>
+
+  <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+    <resetJUL>true</resetJUL>
+  </contextListener>
+
+</configuration>
